@@ -34,17 +34,17 @@ export default function Table({ data, setSort, sort }: TableProps) {
 
     return (
         <div className='w-screen'>
-            <table className="w-screen overflow-x-scroll text-xs table-auto xl:text-base border-spacing-x-1">
+            <table className="w-screen text-xs table-auto xl:text-base border-spacing-x-1">
                 <thead className='border '>
                     <tr className='text-white '>
                         <th>id</th>
                         <th className='flex items-center justify-center gap-2' onClick={()=>{setSort((prev)=>!prev)}}>Name {sort ? <BiSolidUpArrow /> :  <BiSolidDownArrow />}</th>
                         <th>Username</th>
                         <th>Phone</th>
-                        <th>Email</th>
-                        <th>Website</th>
-                        <th>Address</th>
-                        <th>Company</th>
+                        <th className='hidden md:table-cell'>Email</th>
+                        <th className='hidden md:table-cell'>Website</th>
+                        <th className='hidden md:table-cell'>Address</th>
+                        <th className='hidden md:table-cell'>Company</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -54,10 +54,10 @@ export default function Table({ data, setSort, sort }: TableProps) {
                             <td className='px-[2px]'>{item.name}</td>
                             <td className='px-[2px]'>{item.username}</td>
                             <td className='px-[2px] '>{item.phone}</td>
-                            <td className='px-[2px]'>{item.email}</td>
-                            <td className='px-[2px]'>{item.website}</td>
-                            <td className='px-[2px] xl:text-[14px] w-48'>{`${item.address.suite}, ${item.address.street}, ${item.address.city}, zip - ${item.address.zipcode}`}</td>
-                            <td className='px-[2px]'>{item.company.name}</td>
+                            <td className='px-[2px] hidden md:table-cell'>{item.email}</td>
+                            <td className='px-[2px] hidden md:table-cell'>{item.website}</td>
+                            <td className='px-[2px] xl:text-[14px] w-48 hidden md:table-cell'>{`${item.address.suite}, ${item.address.street}, ${item.address.city}, zip - ${item.address.zipcode}`}</td>
+                            <td className='px-[2px] hidden md:table-cell'>{item.company.name}</td>
                         </tr>
                     ))}
 
