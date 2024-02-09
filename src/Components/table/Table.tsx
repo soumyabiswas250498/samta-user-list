@@ -1,18 +1,18 @@
 import React, { useEffect } from 'react'
-
-
+import { BiSolidDownArrow } from "react-icons/bi";
+import { BiSolidUpArrow } from "react-icons/bi";
 
 export default function Table(props: any) {
-    const { data } = props;
+    const { data, setSort, sort } = props;
 
     return (
         <div className='w-screen'>
             <table className="w-screen overflow-x-scroll text-xs table-auto xl:text-base border-spacing-x-1">
-                <thead>
-                    <tr>
+                <thead className='border '>
+                    <tr className='text-white '>
                         <th>id</th>
-                        <th>Name</th>
-                        <th>UserName</th>
+                        <th className='flex items-center justify-center gap-2' onClick={()=>{setSort((prev:any)=>!prev)}}>Name {sort ? <BiSolidUpArrow /> :  <BiSolidDownArrow />}</th>
+                        <th>Username</th>
                         <th>Phone</th>
                         <th>Email</th>
                         <th>Website</th>
@@ -21,9 +21,9 @@ export default function Table(props: any) {
                     </tr>
                 </thead>
                 <tbody>
-                    {data.map((item: any) => (
+                    {data.map((item: any, index: any) => (
                         <tr key={item.id} className='h-12 even:bg-gray-200 odd:bg-slate-300'>
-                            <td className='px-[2px]'>{item.id}</td>
+                            <td className='px-[2px]'>{index+1}</td>
                             <td className='px-[2px]'>{item.name}</td>
                             <td className='px-[2px]'>{item.username}</td>
                             <td className='px-[2px] '>{item.phone}</td>

@@ -1,17 +1,64 @@
-import React, { useEffect } from 'react'
+import React, {useState, useEffect } from 'react'
 import { useUserData } from '../Hooks/useUserData';
 import { useSelector } from 'react-redux'
 import Table from '../Components/table/Table'
+import InputField from '../Components/InputField';
+
+
+
+
+
 export default function Users() {
+    const [debouncedSearch, setDebouncedSearch] = useState('');
+    const [useData, setUserData]:any = useState([])
     const { getUserData } = useUserData()
-    const { data, isLoading } = useSelector((state: any) => state.UserData)
-    console.log(data)
+    const { data, isLoading } = useSelector((state: any) => state.UserData);
+    const [sort, setSort] = useState(false)
+    useEffect(()=>{
+        if(debouncedSearch){
+            let temp = data.filter((item: any)=>item.name.toLowerCase().includes(debouncedSearch.toLowerCase()) );
+            setUserData(temp)
+            const prevSearch = localStorage.getItem('search');
+            // console.log(prevSearch)
+            localStorage.setItem('search', `${prevSearch||''}, ${debouncedSearch}`)
+        }else{
+            if(sort){
+                let tempData = [...data]
+                tempData.sort((a:any, b: any) => {
+                    if (a.name < b.name) return 1;
+                    if (a.name > b.name) return -1;
+                    return 0;
+                });
+                setUserData(tempData)
+
+            }else{
+                let tempData = [...data]
+                tempData.sort((a:any, b: any) => {
+                    if (a.name < b.name) return -1;
+                    if (a.name > b.name) return 1;
+                    return 0;
+                });
+                setUserData(tempData)
+            }
+            // setUserData(data)
+        }
+
+    }, [debouncedSearch, data, sort])
+    console.log(debouncedSearch)
     useEffect(() => {
         getUserData()
     }, [])
     return (
-        <div>
-            <Table data={data} />
+        <div className='w-full '>
+            <div className='flex items-center justify-center w-full py-6'>
+                <InputField setDebouncedSearch={setDebouncedSearch} />
+            </div>
+            {isLoading ? <div className='flex items-center justify-center h-40'>
+                <div className=" loader"></div>
+            </div> :
+                <Table data={useData} setSort={setSort} sort={sort} />
+            }
+
         </div>
     )
 }

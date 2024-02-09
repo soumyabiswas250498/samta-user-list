@@ -5,8 +5,7 @@ import store from './redux/Store';
 function App() {
   return (
     <Provider store={store}>
-      <div className='bg-slate-400'>
-        <h1 className=''>Hello</h1>
+      <div className='xl:h-screen bg-slate-400'>
         <Users />
       </div>
     </Provider>
