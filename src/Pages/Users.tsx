@@ -5,18 +5,34 @@ import Table from '../Components/table/Table'
 import InputField from '../Components/InputField';
 
 
-
+interface UserData {
+    id: number;
+    name: string;
+    username: string;
+    phone: string;
+    email: string;
+    website: string;
+    address: {
+      suite: string;
+      street: string;
+      city: string;
+      zipcode: string;
+    };
+    company: {
+      name: string;
+    };
+  }
 
 
 export default function Users() {
-    const [debouncedSearch, setDebouncedSearch] = useState('');
-    const [useData, setUserData]:any = useState([])
+    const [debouncedSearch, setDebouncedSearch] = useState<string>('');
+    const [useData, setUserData] = useState<UserData[]>([]);
     const { getUserData } = useUserData()
     const { data, isLoading } = useSelector((state: any) => state.UserData);
     const [sort, setSort] = useState(false)
     useEffect(()=>{
         if(debouncedSearch){
-            let temp = data.filter((item: any)=>item.name.toLowerCase().includes(debouncedSearch.toLowerCase()) );
+            let temp = data.filter((item: UserData)=>item.name.toLowerCase().includes(debouncedSearch.toLowerCase()) );
             setUserData(temp)
             const prevSearch = localStorage.getItem('search');
             // console.log(prevSearch)
@@ -24,7 +40,7 @@ export default function Users() {
         }else{
             if(sort){
                 let tempData = [...data]
-                tempData.sort((a:any, b: any) => {
+                tempData.sort((a:UserData, b: UserData) => {
                     if (a.name < b.name) return 1;
                     if (a.name > b.name) return -1;
                     return 0;
@@ -33,7 +49,7 @@ export default function Users() {
 
             }else{
                 let tempData = [...data]
-                tempData.sort((a:any, b: any) => {
+                tempData.sort((a:UserData, b: UserData) => {
                     if (a.name < b.name) return -1;
                     if (a.name > b.name) return 1;
                     return 0;

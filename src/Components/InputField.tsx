@@ -1,11 +1,15 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, ChangeEvent, Dispatch, SetStateAction } from 'react';
 
-export default function InputField(props: any) {
-    const {setDebouncedSearch} = props;
+interface InputFieldProps {
+    setDebouncedSearch: Dispatch<SetStateAction<string>>;
+  }
+
+
+export default function InputField({ setDebouncedSearch }: InputFieldProps) {
     const [searchInput, setSearchInput] = useState('');
     const [searchHistory, setSearchHistrory] = useState(['']);
     const [focus, setFocus] = useState(false)
-    const handleChange = (e: any)=>{
+    const handleChange = (e : ChangeEvent<HTMLInputElement>)=>{
         setSearchInput(e.target.value)
     }
 

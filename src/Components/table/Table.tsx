@@ -1,9 +1,36 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, Dispatch, SetStateAction } from 'react'
 import { BiSolidDownArrow } from "react-icons/bi";
 import { BiSolidUpArrow } from "react-icons/bi";
 
-export default function Table(props: any) {
-    const { data, setSort, sort } = props;
+interface Address {
+    street: string;
+    suite: string;
+    city: string;
+    zipcode: string;
+  }
+  
+  interface Company {
+    name: string;
+  }
+  
+  interface UserData {
+    id: number;
+    name: string;
+    username: string;
+    phone: string;
+    email: string;
+    website: string;
+    address: Address;
+    company: Company;
+  }
+  
+  interface TableProps {
+    data: UserData[];
+    setSort: Dispatch<SetStateAction<boolean>>;
+    sort: boolean;
+  }
+
+export default function Table({ data, setSort, sort }: TableProps) {
 
     return (
         <div className='w-screen'>
@@ -11,7 +38,7 @@ export default function Table(props: any) {
                 <thead className='border '>
                     <tr className='text-white '>
                         <th>id</th>
-                        <th className='flex items-center justify-center gap-2' onClick={()=>{setSort((prev:any)=>!prev)}}>Name {sort ? <BiSolidUpArrow /> :  <BiSolidDownArrow />}</th>
+                        <th className='flex items-center justify-center gap-2' onClick={()=>{setSort((prev)=>!prev)}}>Name {sort ? <BiSolidUpArrow /> :  <BiSolidDownArrow />}</th>
                         <th>Username</th>
                         <th>Phone</th>
                         <th>Email</th>
@@ -21,7 +48,7 @@ export default function Table(props: any) {
                     </tr>
                 </thead>
                 <tbody>
-                    {data.map((item: any, index: any) => (
+                    {data.map((item, index: number) => (
                         <tr key={item.id} className='h-12 even:bg-gray-200 odd:bg-slate-300'>
                             <td className='px-[2px]'>{index+1}</td>
                             <td className='px-[2px]'>{item.name}</td>
