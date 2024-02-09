@@ -65,7 +65,7 @@ export default function Users() {
         getUserData()
     }, [])
     return (
-        <div className='w-full overflow-x-hidden'>
+        <div className='w-full h-screen overflow-x-hidden'>
             <div className='flex items-center justify-center w-full py-6'>
                 <InputField setDebouncedSearch={setDebouncedSearch} />
             </div>

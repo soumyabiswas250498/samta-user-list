@@ -30,11 +30,11 @@ export default function InputField({ setDebouncedSearch }: InputFieldProps) {
 
     return (
         <div className='relative w-60'>
-            <input type="text" placeholder='Search by name' className='w-full px-2 py-3 rounded-md outline-none focus:rounded-b-none' value={searchInput} onChange={(e) =>{handleChange(e) }} onFocus={() => setFocus(true)} onBlur={()=>{setFocus(false)}} />
+            <input type="text" placeholder='Search by name' className={`w-full px-2 py-3 rounded-md outline-none ${!searchInput &&'focus:rounded-b-none'}`} value={searchInput} onChange={(e) =>{handleChange(e) }} onFocus={() => setFocus(true)} onBlur={()=>{setFocus(false)}} />
 
-            {focus && <div className='absolute z-10 w-full px-2 py-2 overflow-y-auto border border-t-0 border-gray-100 top-12 h-80 rounded-b-md bg-slate-100 custom-scrollbar'>
+            {focus && !searchInput && <div className='absolute z-10 w-full px-1 py-2 overflow-y-auto border border-t-0 border-gray-100 top-12 h-fit max-h-80 rounded-b-md bg-slate-100 custom-scrollbar'>
                 {
-                    searchHistory.map((item, index: number)=><p key={index} className='py-1'>{item}</p>)
+                    searchHistory.map((item, index: number)=>(item !=='' ? <p key={index} className='px-2 py-1 rounded-md cursor-pointer hover:bg-slate-300'>{ item}</p> :null))
                 }
             </div>}
 
